@@ -10,6 +10,7 @@ import Text from "@tiptap/extension-text";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
+import { createPost } from "../services/api.post.services";
 
 const MenuBar = ({ editor }) => {
   const addImage = () => {
@@ -111,6 +112,18 @@ const MenuBar = ({ editor }) => {
 const TipTap = () => {
   const [editorContent, setEditorContent] = useState("Comienza a escribir!");
 
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
+    //Puede que no sea la mejor forma, si podemos guardar el contenido como json quizas sea mejor para renderizar. O guardar de ambas formas??
+    await createPost({ content: editorContent })
+      .then(() => {
+        alert("Post creado con exito");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   const editor = useEditor({
     content: "Comienza a escribir!",
     onUpdate: ({ editor }) => {
@@ -118,18 +131,11 @@ const TipTap = () => {
     },
     extensions: [
       StarterKit,
-      Document,
-      Paragraph,
-      Text,
       Image,
-      Dropcursor,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
       Highlight,
-      Heading.configure({
-        levels: [1, 2, 3],
-      }),
     ],
   });
 
@@ -159,7 +165,10 @@ const TipTap = () => {
           </button>
         </div>
         <div>
-          <button className="border border-gray-300 rounded p-2">
+          <button
+            className="border border-gray-300 rounded p-2"
+            onClick={handleCreatePost}
+          >
             Guardar
           </button>
         </div>
