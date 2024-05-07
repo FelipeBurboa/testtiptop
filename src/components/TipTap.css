@@ -33,7 +33,8 @@
     }
 
     a {
-      color: #35339e;
+      color: blue;
+      font-weight: 700;
     }
   
     code {
