@@ -4,7 +4,8 @@ import TextAlign from "@tiptap/extension-text-align";
 import Image from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
+import Link from "@tiptap/extension-link";
+import { useState, useCallback } from "react";
 import { createPost } from "../services/api.post.services";
 
 const MenuBar = ({ editor }) => {
@@ -16,103 +17,150 @@ const MenuBar = ({ editor }) => {
     }
   };
 
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes("link").href;
+    let url = window.prompt("URL", previousUrl);
+
+    // cancelled
+    if (url === null) {
+      return;
+    }
+
+    // empty
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
+    }
+
+    if (url.startsWith("www.")) {
+      url = `https://${url}`;
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  }, [editor]);
+
   if (!editor) {
     return null;
   }
 
   return (
-    <div className="w-full mx-auto justify-between flex border  border-gray-300 rounded p-2 mb-2">
-      <button
-        onClick={addImage}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Add image
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
-      >
-        H1
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
-      >
-        H2
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
-      >
-        H3
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive("paragraph") ? "is-active" : ""}
-      >
-        paragraph
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "is-active" : ""}
-      >
-        bold
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is-active" : ""}
-      >
-        italic
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={editor.isActive("strike") ? "is-active" : ""}
-      >
-        strike
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHighlight().run()}
-        className={editor.isActive("highlight") ? "is-active" : ""}
-      >
-        highlight
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setTextAlign("left").run()}
-        className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
-      >
-        left
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setTextAlign("center").run()}
-        className={editor.isActive({ textAlign: "center" }) ? "is-active" : ""}
-      >
-        center
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setTextAlign("right").run()}
-        className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
-      >
-        right
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setTextAlign("justify").run()}
-        className={editor.isActive({ textAlign: "justify" }) ? "is-active" : ""}
-      >
-        justify
-      </button>
+    <div className="w-full flex flex-col items-center gap-2 mb-2">
+      <div className="flex gap-1">
+        <button
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 1 }).run()
+          }
+          className="bg-slate-500 hover:bg-slate-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          H1
+        </button>
+        <button
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 2 }).run()
+          }
+          className="bg-slate-500 hover:bg-slate-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          H2
+        </button>
+        <button
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
+          className="bg-slate-500 hover:bg-slate-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          H3
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setParagraph().run()}
+          className="bg-slate-500 hover:bg-slate-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Párrafo
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          className="bg-slate-800 hover:bg-black text-white font-semibold py-1 px-2 rounded"
+        >
+          Bold
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          className="bg-slate-800 hover:bg-black text-white font-semibold py-1 px-2 rounded"
+        >
+          Italic
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          className="bg-slate-800 hover:bg-black text-white font-semibold py-1 px-2 rounded"
+        >
+          Tachar
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHighlight().run()}
+          className="bg-slate-800 hover:bg-black text-white font-semibold py-1 px-2 rounded"
+        >
+          Destacar
+        </button>
+      </div>
+      <div className="flex gap-1">
+        <button
+          onClick={() => editor.chain().focus().setTextAlign("left").run()}
+          className="bg-violet-500 hover:bg-violet-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Izquierda
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign("center").run()}
+          className="bg-violet-500 hover:bg-violet-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Centro
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign("right").run()}
+          className="bg-violet-500 hover:bg-violet-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Derecha
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+          className="bg-violet-500 hover:bg-violet-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Justificar
+        </button>
+        <button
+          onClick={addImage}
+          className="bg-teal-500 hover:bg-teal-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Imagen
+        </button>
+        <button
+          onClick={setLink}
+          className="bg-green-500 hover:bg-green-700 text-white font-semibold py-1 px-2 rounded"
+        >
+          Linkear
+        </button>
+        <button
+          onClick={() => editor.chain().focus().unsetLink().run()}
+          disabled={!editor.isActive("link")}
+          className="bg-red-500 hover:bg-red-800 text-white font-semibold py-1 px-2 rounded"
+        >
+          Deslinkear
+        </button>
+      </div>
     </div>
   );
 };
 
-const Editor = () => {
+const Editor = ({ refetch }) => {
   const [editorContent, setEditorContent] = useState("Comienza a escribir!");
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    //Puede que no sea la mejor forma, si podemos guardar el contenido como json quizas sea mejor para renderizar. O guardar de ambas formas??
     await createPost({ content: editorContent })
       .then(() => {
         alert("Post creado con exito");
+        refetch();
       })
       .catch((error) => {
         alert(error);
@@ -131,6 +179,11 @@ const Editor = () => {
         types: ["heading", "paragraph"],
       }),
       Highlight,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        linkOnPaste: true,
+      }),
     ],
   });
 
@@ -138,37 +191,38 @@ const Editor = () => {
     <div>
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
-      <div className="w-full mx-auto justify-between flex rounded p-2">
+      <div className="w-full mx-auto justify-between flex rounded p-2 ">
         <div>
           <button
             onClick={() => editor.chain().focus().undo().run()}
-            className="mr-2 border border-gray-300 rounded p-2"
+            className="mr-2 border border-gray-300 rounded p-2 bg-blue-400 text-white hover:bg-blue-600 font-bold"
           >
-            Undo
+            Deshacer
           </button>
           <button
             onClick={() => editor.chain().focus().redo().run()}
-            className="mr-2 border border-gray-300 rounded p-2"
+            className="mr-2 border border-gray-300 rounded p-2 bg-blue-400 text-white hover:bg-blue-600 font-bold"
           >
-            Redo
+            Rehacer
           </button>
           <button
             onClick={() => editor.chain().focus().clearContent().run()}
-            className="border border-gray-300 rounded p-2"
+            className="border border-gray-300 rounded p-2 bg-blue-400 text-white hover:bg-blue-600 font-bold"
           >
-            Clear
+            Limpiar
           </button>
         </div>
         <div>
           <button
-            className="border border-gray-300 rounded p-2"
+            className="border border-gray-300 rounded p-2 bg-blue-500 text-white hover:bg-blue-700 font-bold"
             onClick={handleCreatePost}
           >
             Guardar
           </button>
         </div>
       </div>
-      <div className="w-full mx-auto justify-between flex rounded p-2 mt-2 bg-gray-200 flex-col gap-2">
+      {/*Esto se puede descomentar para ver como esta saliendo el texto, es como para debuggear*/}
+      {/*<div className="w-full mx-auto justify-between flex rounded p-2 mt-2 bg-gray-200 flex-col gap-2">
         <div className="border border-blue-700">
           <p className="ml-2">Content:</p>
           <p className="ml-2">{editorContent}</p>
@@ -180,9 +234,8 @@ const Editor = () => {
         <div className="border border-blue-700">
           <p className="ml-2">JSON:</p>
           <p className="ml-2">{JSON.stringify(editor?.getJSON())}</p>
-          {console.log(JSON.stringify(editor?.getJSON()))}
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 };

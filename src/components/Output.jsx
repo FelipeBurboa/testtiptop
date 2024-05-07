@@ -4,7 +4,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Image from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
+import Link from "@tiptap/extension-link";
 
 const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -13,10 +13,8 @@ const MenuBar = ({ editor }) => {
 };
 
 const Output = ({ content }) => {
-  const [editorContent, setEditorContent] = useState(content);
-
   const editor = useEditor({
-    content: editorContent,
+    content: content,
     editable: false,
     extensions: [
       StarterKit,
@@ -25,6 +23,7 @@ const Output = ({ content }) => {
         types: ["heading", "paragraph"],
       }),
       Highlight,
+      Link,
     ],
   });
 
