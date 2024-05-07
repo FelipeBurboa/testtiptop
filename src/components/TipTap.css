@@ -32,6 +32,9 @@
       font-size: 1.25rem;
     }
 
+    a {
+      color: #35339e;
+    }
   
     code {
       background-color: rgba(#616161, 0.1);

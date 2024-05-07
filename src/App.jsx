@@ -7,19 +7,23 @@ function App() {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    getAllPosts().then(setPosts);
+    fetchPosts();
   }, []);
+
+  const fetchPosts = async () => {
+    await getAllPosts().then(setPosts).catch(console.error);
+  };
 
   console.log(posts);
   return (
     <>
       <h1 className="text-3xl font-bold text-center mb-2">Test TipTap</h1>
       <div className="w-1/2 mx-auto">
-        <Editor />
+        <Editor refetch={fetchPosts} />
       </div>
       <div className="w-1/2 mx-auto flex flex-col mt-2">
         {posts?.map((post) => (
-          <div key={post.id} className="mb-2">
+          <div key={post.id} className="mb-2 border border-gray-300">
             <Output content={post.content} />
           </div>
         ))}
