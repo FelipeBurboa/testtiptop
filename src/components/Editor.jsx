@@ -222,7 +222,7 @@ const Editor = ({ refetch }) => {
         </div>
       </div>
       {/*Esto se puede descomentar para ver como esta saliendo el texto, es como para debuggear*/}
-      {/*<div className="w-full mx-auto justify-between flex rounded p-2 mt-2 bg-gray-200 flex-col gap-2">
+      <div className="w-full mx-auto justify-between flex rounded p-2 mt-2 bg-gray-200 flex-col gap-2">
         <div className="border border-blue-700">
           <p className="ml-2">Content:</p>
           <p className="ml-2">{editorContent}</p>
@@ -235,7 +235,7 @@ const Editor = ({ refetch }) => {
           <p className="ml-2">JSON:</p>
           <p className="ml-2">{JSON.stringify(editor?.getJSON())}</p>
         </div>
-      </div>*/}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-tiptap-dev-cdec4-authRole",
+      "UnauthRoleArn": "arn:aws:iam::654654165985:role/amplify-tiptap-dev-cdec4-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::654654165985:role/amplify-tiptap-dev-cdec4-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-tiptap-dev-cdec4-deployment",
+      "UnauthRoleName": "amplify-tiptap-dev-cdec4-unauthRole",
+      "StackName": "amplify-tiptap-dev-cdec4",
+      "StackId": "arn:aws:cloudformation:us-east-2:654654165985:stack/amplify-tiptap-dev-cdec4/ddb67de0-1138-11ef-a313-061571038b33",
+      "AmplifyAppId": "d2431v1f5wvucb"
+    }
+  }
+}
