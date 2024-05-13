@@ -17,11 +17,12 @@ function App() {
   console.log(posts);
   return (
     <>
-      <h1 className="text-3xl font-bold text-center mb-2">Test TipTap</h1>
+      <h1 className="text-3xl font-bold text-center mb-2">Editor TipTap</h1>
       <div className="w-1/2 mx-auto">
         <Editor refetch={fetchPosts} />
       </div>
-      <div className="w-1/2 mx-auto flex flex-col mt-2">
+      <div className="w-1/2 mx-auto flex flex-col mt-2 bg-gray-100">
+        <h1 className="text-center text-3xl font-bold">Posts Creados</h1>
         {posts?.map((post) => (
           <div key={post.id} className="mb-2 border border-gray-300">
             <Output content={post.content} />

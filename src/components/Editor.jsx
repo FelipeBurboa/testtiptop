@@ -223,10 +223,7 @@ const Editor = ({ refetch }) => {
       </div>
       {/*Esto se puede descomentar para ver como esta saliendo el texto, es como para debuggear*/}
       <div className="w-full mx-auto justify-between flex rounded p-2 mt-2 bg-gray-200 flex-col gap-2">
-        <div className="border border-blue-700">
-          <p className="ml-2">Content:</p>
-          <p className="ml-2">{editorContent}</p>
-        </div>
+        <h1 className="text-3xl font-bold text-center">Contenido del editor</h1>
         <div className="border border-blue-700">
           <p className="ml-2">HTML:</p>
           <p className="ml-2">{editor?.getHTML()}</p>
