@@ -1,6 +1,9 @@
+const BASE_URL =
+  "https://backendtiptap.onrender.com" || "http://localhost:3000";
+
 const createPost = async (body) => {
   console.log(body);
-  const response = await fetch(`http://localhost:3000/api/posts`, {
+  const response = await fetch(`${BASE_URL}/api/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +19,7 @@ const createPost = async (body) => {
 };
 
 const getPost = async (id) => {
-  const response = await fetch(`http://localhost:3000/api/posts/${id}`);
+  const response = await fetch(`${BASE_URL}/api/posts/${id}`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -25,7 +28,7 @@ const getPost = async (id) => {
 };
 
 const getAllPosts = async () => {
-  const response = await fetch(`http://localhost:3000/api/posts`);
+  const response = await fetch(`${BASE_URL}/api/posts`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -36,7 +39,7 @@ const getAllPosts = async () => {
 const updatePost = async (id, newData) => {
   console.log(uid);
   console.log(newData);
-  const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
+  const response = await fetch(`${BASE_URL}/api/posts/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -52,7 +55,7 @@ const updatePost = async (id, newData) => {
 };
 
 const deletePost = async (id) => {
-  const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
+  const response = await fetch(`${BASE_URL}/api/posts/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
