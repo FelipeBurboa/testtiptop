@@ -17,7 +17,7 @@ function App() {
   console.log(posts);
   return (
     <>
-      <h1 className="text-3xl font-bold text-center mb-2">Editor TipTap</h1>
+      <h1 className="text-3xl font-bold text-center mb-2">TipTap</h1>
       <div className="w-1/2 mx-auto">
         <Editor refetch={fetchPosts} />
       </div>
